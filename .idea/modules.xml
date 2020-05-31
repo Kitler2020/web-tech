@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/web-tech.iml" filepath="$PROJECT_DIR$/.idea/web-tech.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/shop.iml" filepath="$PROJECT_DIR$/.idea/shop.iml" />
+>>>>>>> 2ce0a5c... Пагінація, фільтрація, авторизація, CRUD, загрузка фото на сервер
+    </modules>
+  </component>
+</project>

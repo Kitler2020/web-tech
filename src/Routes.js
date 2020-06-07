@@ -15,7 +15,7 @@ import DataUpdateContainer from "./Admin/AdminPages/DataUpdate";
 
 export const Routes =(props)=>{
 
-  useEffect(()=>props.getUserAuth(localStorage.userId,localStorage.jwt),[])
+  useEffect(()=>props.getUserAuth(),[])
     return(
         <BrowserRouter>
             <Switch>
@@ -23,9 +23,9 @@ export const Routes =(props)=>{
                 <Route path={'/shop'} exact component={ShopContainer}/>
                 <Route path={'/signup'} exact component={SignUpContainer}/>
                 <Route path={'/signin'}  exact component={SignInContainer}/>
-                <PrivateRoute path ='/user/profile' exact component={ProfileContainer}/>
-                <PrivateAdminRoute path ='/admin/profile' exact component={AdminProfileContainer}/>
-                <PrivateAdminRoute path ='/admin/product' exact component={DataUpdateContainer}/>
+                <PrivateRoute path ='/user/profile'  component={ProfileContainer}/>
+                <PrivateAdminRoute path ='/admin/profile'  component={AdminProfileContainer}/>
+                <PrivateAdminRoute path ='/admin/product'  component={DataUpdateContainer}/>
 
                 {/*{props.userToken.token ? <PrivateRoute path ='/user/profile' exact component={ProfileContainer}/> : <Redirect to={'/signin'}/>}*/}
 
@@ -45,7 +45,7 @@ const mapStateToProps =(state)=>{
 const mapDispatchToProps = (dispatch)=>{
     return{
         // userHasToken:()=>{dispatch(userHasToken())},
-        getUserAuth: (id,jwt)=>dispatch(getUserAuth(id,jwt))
+        getUserAuth: ()=>dispatch(getUserAuth())
 
 
 

@@ -4,7 +4,6 @@ import Container from "../Container";
 
 let SignUpForm = (props) => {
     return (
-        <Container className='container'>
             <div className={'container-form'}>
                 <form onSubmit={props.handleSubmit}>
                     <Field
@@ -29,7 +28,6 @@ let SignUpForm = (props) => {
                 </form>
             </div>
 
-        </Container>
 
 
     )

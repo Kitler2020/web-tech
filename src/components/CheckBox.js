@@ -3,17 +3,8 @@ import {handleToggleFilter} from "../reducers/product";
 
 const CheckBox = (props) => {
 
-    // const handleToggleFilter = (filters) => {
-    //     props.handleToogleFilters()
-    //     props.handleToggle()
-    // }
+    
 
-
-    const handleToggleChange = filter => () =>{
-        console.log(filter)
-
-
-}
     return (
         <div className='contentLeftItem'>
             {props.items.map((item,index) => {
@@ -22,11 +13,14 @@ const CheckBox = (props) => {
                         <input
                             // onChange={handleToggleFilter(item._id)}
                             onChange={()=>{
-                                props.handleToggle(item._id,props.filterBy)
-                                setTimeout(()=>{
-                                    props.loadFilteredProducts(props.page,props.limit,props.filters)
-                                },0)
-                             //   debugger
+                              
+                                    props.handleToggle(item._id,props.filterBy)
+
+                            
+                                
+                                props.loadFilteredProducts(props.page,props.limit,props.filters,props.order,props.sortBy)
+
+                               
                             }
                             }
                             //    onChange={(e)=>props.handleToggleFilter(item._id)}

@@ -60,9 +60,11 @@ export const loadProductsFromDB = (sortBy = 'sold', limit = 20) => {
     })
 
 }
-export const loadFilteredProductsFromDB = (page, limit ,filters) => {
+export const  loadFilteredProductsFromDB = (page, limit ,filters,order,sortBy) => {
+    // debugger
+
     return ((dispatch) => {
-        const data ={limit,page,filters}
+        const data ={limit,page,filters,order,sortBy}
         dispatch(productsIsLoading(true))
         fetch(`${API}/products/by/search`, {
             method: 'POST', mode: 'cors',
@@ -77,11 +79,12 @@ export const loadFilteredProductsFromDB = (page, limit ,filters) => {
                 if (!response.ok) {
                     console.log(response.statusText)
                 }
-                dispatch(productsIsLoading(false))
                 return response
             })
             .then(response => response.json())
             .then(products => {
+                dispatch(productsIsLoading(false))
+
                 if (products.msg){
                     dispatch(productsHasError(true,products.msg))
                 }else {
@@ -230,8 +233,8 @@ export const addCategory = (category) => {
             .then(data => {
                 dispatch(categoriesIsLoading(false))
 
-                if (data.error) {
-                        dispatch(categoriesHasError(true, data.error))
+                if (data.err) {
+                        dispatch(categoriesHasError(true, data.err))
                     } else {
                         dispatch(categoriesHasError(false, ''))
                         dispatch(createCategory(data.data))
@@ -410,8 +413,8 @@ export const addManufacturer = (manufacturer) => {
                 .then(data => {
                         dispatch(manufacturesIsLoading(false))
 
-                        if (data.error) {
-                            dispatch(manufacturesHasError(true, data.error))
+                        if (data.err) {
+                            dispatch(manufacturesHasError(true, data.err))
                         } else {
                             dispatch(manufacturesHasError(false, ''))
                             dispatch(createManufacturer(data.data))
@@ -585,8 +588,8 @@ export const addDelivery = (delivery) => {
                 .then(data => {
                         dispatch(deliveryIsLoading(false))
 
-                        if (data.error) {
-                            dispatch(deliveryHasError(true, data.error))
+                        if (data.err) {
+                            dispatch(deliveryHasError(true, data.err))
                         } else {
                             dispatch(deliveryHasError(false, ''))
                             dispatch(createDelivery(data.data))
@@ -942,12 +945,13 @@ export const signInUser = (user) => {
             })
     }
 }
-export const getUserAuth = (id,jwt) => {
+export const getUserAuth = () => {
     return (dispatch) => {
-        dispatch(userIsLoading(true))
-        // const id = localStorage.userId
-        // const jwt = localStorage.jwt
+        const id = localStorage.userId
+        const jwt = localStorage.jwt
         if (id && jwt) {
+            dispatch(userIsLoading(true))
+
             fetch(`${API}/user/${id}`, {
                 method: 'GET',
                 headers: {
@@ -961,6 +965,8 @@ export const getUserAuth = (id,jwt) => {
                     if (!response.ok) {
                         console.log(response.statusText)
                     }
+                    console.log(response)
+
                     return response
                 })
                 .then(response => response.json())

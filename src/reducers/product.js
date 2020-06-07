@@ -34,6 +34,8 @@ const CATEGORIES_HAS_ERROR = "CATEGORIES_HAS_ERROR"
 const HANDLE_CHANGE_CATEGORY = "HANDLE_CHANGE_CATEGORY"
 
 const HANDLE_TOGGLE_FILTER = "HANDLE_TOGGLE_FILTER"
+const HANDLE_TOGGLE_ORDER = "HANDLE_TOGGLE_ORDER"
+const HANDLE_TOGGLE_OPTIONS = "HANDLE_TOGGLE_OPTIONS"
 const HANDLE_CHANGE_INPUT = "HANDLE_CHANGE_INPUT"
 const HANDLE_CHANGE_PHOTO = "HANDLE_CHANGE_PHOTO"
 
@@ -56,8 +58,42 @@ const productsInitialState = {
     productsSize : 0,
     selectedPage : 1,
     totalProductsSize : 0,
+    order :'desc',
+    orderList : [
+        {
+            value :'asc',
+            name : 'За зростанням'
+        },
+        {
+            value :'desc',
+            name : 'За спаданням'
+        }
+    ],
+    sortBy : 'name',
+    optionList: [
+        {
+            value : 'createdAt',
+            name : 'За датою поступлення'
+        },
+        {
+            value : 'name',
+            name : 'Сортувати за назвою'
+        },
+        {
+            value : 'price',
+            name : 'Сортувати за ціною'
+        },
+        {
+            value : 'quantity',
+            name : 'Сортувати за кількістю'
+        },
 
-
+        {
+            value : 'sold',
+            name : 'Топ продаж'
+        }
+    ]
+    ,
     formData: new FormData(),
 
 
@@ -92,6 +128,7 @@ const productsInitialState = {
     deliveryError: false,
     deliveryErrorMsg: '',
     deliveryList: [],
+
 
 
     product :{
@@ -258,7 +295,16 @@ const productsReducer = (state = productsInitialState, action) => {
             // console.log(newFormData.get('photo'))
             return {...state,formData: newFormData}
         }
-
+        case HANDLE_TOGGLE_OPTIONS:{
+            
+            let sort = action.selectedOption
+            let newState ={...state, sortBy: sort}
+            return {...newState}
+        }
+        case HANDLE_TOGGLE_ORDER :{
+            state.order = action.order
+            return {...state}
+        }
 
 
         default : {
@@ -296,6 +342,8 @@ export const deliveryHasError = (bool, errorMsg) => ({type: DELIVERY_HAS_ERROR, 
 
 
 export const handleToggleFilter = (filter, filterBy) => ({type: HANDLE_TOGGLE_FILTER, filter, filterBy})
+export const handleToggleOptions = (selectedOption) => ({type: HANDLE_TOGGLE_OPTIONS, selectedOption})
+export const handleToggleOrder = (order) => ({type: HANDLE_TOGGLE_ORDER, order})
 export const handleChangeInput = (name,value) => ({type: HANDLE_CHANGE_INPUT, name,value})
 export const handleChangeCategory = (categoryId) => ({type: HANDLE_CHANGE_CATEGORY, categoryId})
 export const handleChangeProduct = (productId) => ({type: HANDLE_CHANGE_PRODUCT, productId})

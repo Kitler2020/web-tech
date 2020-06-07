@@ -30,9 +30,9 @@ let AddCategoryForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <label htmlFor="name">Добавити категорію</label>
+            {props.product.categoriesError &&  <p>{props.product.categoriesErrorMsg}</p>}
             <Field
                 name={'name'}
-                value={props.product.category.name}
                 component={'input'}
                 type={'text'}
                 placeholder={'Введіть назву категорії'}
@@ -50,6 +50,7 @@ let UpdateCategoryForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <label htmlFor="name">Виберіть категорію з випадаючого списку зверху</label>
+
             <Field name="name"
                    component={'input'}
                    type="name"
@@ -71,10 +72,10 @@ let AddManufacturerForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <label htmlFor="name">Добавити виробника</label>
+            {props.product.manufacturesError &&  <p>{props.product.manufacturesErrorMsg}</p>}
 
             <Field
                 name={'name'}
-                value={props.product.manufacturer.name}
                 component={'input'}
                 type={'text'}
                 placeholder={'Введіть назву Виробника'}
@@ -113,10 +114,10 @@ let AddDeliveryForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <label htmlFor="name">Добавити доставку</label>
+            {props.product.deliveryError &&  <p>{props.product.deliveryErrorMsg}</p>}
 
             <Field
                 name={'name'}
-                value={props.product.delivery.name}
                 component={'input'}
                 type={'text'}
                 placeholder={'Введіть назву Доставки'}
@@ -271,24 +272,30 @@ let AddProductForm = (props) => {
                 </div>
                 <div className={css.formItem}>
                     <label>Категорія товару</label>
-                    {props.product.categoriesLoading ? (<p>Loading....</p>) :
-                    (props.product.categoriesError ? (
-                        <p>{props.product.categoriesErrorMsg}</p>) : loadCategoriesSelector())}
+                    {props.product.categoriesLoading
+                        ? (<p>Loading....</p>)
+                        : loadCategoriesSelector()
+                    }
+
                 </div>
                 <div className={css.formItem}>
                     <label>Виробник товару</label>
-                    {props.product.manufacturesLoading ? (<p>Loading....</p>) :
-                    (props.product.manufacturesError ? (
-                        <p>{props.product.manufacturesErrorMsg}</p>) : loadManufacturesSelector())}
+                    {props.product.manufacturesLoading
+                        ? (<p>Loading....</p>)
+                        : loadManufacturesSelector()}
+
                 </div>
                 <div className={css.formItem}>
                     <label>Доставка товару</label>
-                    {props.product.deliveryLoading ? (<p>Loading....</p>) :
-                    (props.product.deliveryError ? (
-                        <p>{props.product.deliveryErrorMsg}</p>) : loadDeliverySelector())}
+                    {props.product.deliveryLoading
+                        ? (<p>Loading....</p>)
+                        :  loadDeliverySelector()}
+
                 </div>
 
                 <div className={css.formItem}>
+                    {props.product.isError && <p>{props.product.errorMsg}</p>}
+                    <br/>
                     <button type={'submit'}>Добавити товар</button>
                 </div>
 
@@ -306,7 +313,7 @@ let UpdateProductForm = (props) => {
 
 
     useEffect(() => {
-        props.loadProducts('createdAt', 50)
+        props.loadProducts('createdAt', 500)
         props.loadCategories()
         props.loadManufactures()
         props.loadDeliveries()
@@ -413,8 +420,8 @@ let UpdateProductForm = (props) => {
             <form onSubmit={props.handleSubmit} className={css.form}>
                 <h4>Виберіть товар який потрібно видалити або обновити</h4>
                 <div className={css.formItem}>
-                    {props.product.isLoading ? (<p>Loading....</p>) :
-                        (props.product.isError ? (<p>{props.product.errorMsg}</p>) : loadProductSelector())}
+                    {props.product.isLoading ? (<p>Loading....</p>) :loadProductSelector()}
+
                 </div>
                 <div className={css.formItem}><label htmlFor="quantity">Оновіть фото товару</label>
                     <input
@@ -618,7 +625,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return (
         {
-            loadProducts: () => dispatch(loadProductsFromDB()),
+            loadProducts: (sortBy,limit) => dispatch(loadProductsFromDB(sortBy,limit)),
             loadCategories: () => dispatch(loadCategoriesFromDB()),
             loadManufactures: () => dispatch(loadManufacturesFromDB()),
             loadDeliveries: () => dispatch(loadDeliveryFromDB()),

@@ -11,7 +11,6 @@ const Menu = (props) => {
     // useEffect(()=>props.getUserAuth(localStorage.userId,localStorage.jwt))
 
     // debugger
-    console.log(props.user)
     return (
         <div className={css.navMenu}>
             <div className={`${css.navMenu} ${css.leftBlock}`}>

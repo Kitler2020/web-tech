@@ -1,30 +1,3 @@
-// import React from 'react'
-//
-// import{isAuth} from './index'
-// import { Route, Redirect } from 'react-router-dom'
-//
-// const PrivateRoute = ({component :Component, ...rest})=>(
-//
-//     <Route {...rest} render = {
-//         props => isAuth()
-//             ? (<Component {...props}/>)
-//             : (
-//                 <Redirect to = {
-//                     {
-//                         pathname : '/signin',
-//                         state : {
-//                             from : props.location
-//                         }
-//                     }
-//                 }
-//                 />
-//             )
-//     }
-//     />
-// )
-//
-// export default PrivateRoute
-
 import {Redirect, Route} from "react-router-dom";
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
@@ -38,7 +11,7 @@ const mapStateToProps =(state)=>{
 }
 const mapDispatchToProps =(dispatch)=>{
     return{
-        getUserAuth: (id,jwt)=>dispatch(getUserAuth(id,jwt))
+        getUserAuth: ()=>dispatch(getUserAuth())
     }
 }
 

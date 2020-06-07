@@ -6,7 +6,6 @@ import Container from "../Container";
 let SignInForm =(props) =>{
 
     return(
-        <Container className={'container'}>
             <div className={'container-form'}>
                 <form onSubmit={props.handleSubmit} >
                     <Field
@@ -24,7 +23,6 @@ let SignInForm =(props) =>{
                     <button type={'submit'} > SignIn</button>
                 </form>
             </div>
-        </Container>
 
     )
 }

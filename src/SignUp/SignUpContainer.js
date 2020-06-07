@@ -4,6 +4,7 @@ import React, {Fragment} from "react";
 import {Redirect} from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "../SignIn/SignInForm";
+import Container from "../Container";
 
 
 
@@ -13,14 +14,16 @@ const SignUpFormContainer =(props)=>{
     }
 
     return(
-        <Fragment>
-            {props.user.role !== undefined ? (<Redirect to={'/'}/>):(<SignUpForm onSubmit = {userSignUpSubmit}/>)}
-        </Fragment>
+        <Container className='container'>
+            {props.user.isError ? (<span>{props.user.errorMsg}</span>) : null }
+
+            {props.user.currentUser.role !== undefined ? (<Redirect to={'/'}/>):(<SignUpForm onSubmit = {userSignUpSubmit}/>)}
+        </Container>
     )
 }
 const mapStateToProps =(state)=>{
     return{
-        user: state.user.currentUser
+        user: state.user
     }
 }
 const mapDispatchToProps = (dispatch)=>{
